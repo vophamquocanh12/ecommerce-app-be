@@ -29,5 +29,6 @@ const trademarksSchema = new mongoose.Schema({
 
 trademarksSchema.plugin(mongoose_auto_populate);
 trademarksSchema.plugin(require('mongoose-paginate-v2'));
+
 let Trademarks = mongoose.model("Trademarks", trademarksSchema)
 module.exports = Trademarks

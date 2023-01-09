@@ -19,6 +19,5 @@ const sizesSchema = new mongoose.Schema({
     }
 )
 
-
 let Sizes = mongoose.model('Sizes', sizesSchema);
 module.exports = Sizes

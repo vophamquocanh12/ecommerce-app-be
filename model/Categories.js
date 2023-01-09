@@ -19,7 +19,7 @@ const categoriesSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Products',
         }]
-    }
+    } 
 },
     {
         timestamps: true
@@ -27,5 +27,6 @@ const categoriesSchema = new mongoose.Schema({
 )
 categoriesSchema.plugin(require('mongoose-autopopulate'))
 categoriesSchema.plugin(mongoosePaginate)
+
 let Categories = mongoose.model("Categories", categoriesSchema)
 module.exports = Categories 

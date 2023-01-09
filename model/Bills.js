@@ -12,7 +12,6 @@ const billsSchema = new mongoose.Schema({
     status: {
         type: Number,
         default: 0
-
         // 0: đang xử lý
         // 1: đã xác nhận
         // 2: đang giao hàng
@@ -57,5 +56,6 @@ const billsSchema = new mongoose.Schema({
 
 billsSchema.plugin(require('mongoose-autopopulate'))
 billsSchema.plugin(require('mongoose-paginate-v2'))
+
 let Bills = mongoose.model('Bills', billsSchema);
 module.exports = Bills

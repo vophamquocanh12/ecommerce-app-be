@@ -28,14 +28,6 @@ const productsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    imageMain: {
-        type: String,
-        required: true
-    },
-    imageSub: [{
-        type: String,
-        default: ''
-    }],
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Categories',
@@ -61,5 +53,6 @@ const productsSchema = new mongoose.Schema({
 
 productsSchema.plugin(mongoose_auto_populate);
 productsSchema.plugin(require('mongoose-paginate-v2'));
+
 let Products = mongoose.model("Products", productsSchema)
 module.exports = Products 

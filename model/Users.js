@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
     },
     slug: {
         type: String,
-        slug: 'nameUser',
+        slug: 'username',
         unique: true
     },
     numberBankAccount: {
@@ -62,7 +62,20 @@ const userSchema = new mongoose.Schema({
             ref: 'Bills',
         }]
     },
-
+    comments: {
+        type: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Comments',
+        }]
+    },
+    actions: {
+        type: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Actions',
+            }
+        ]
+    },
 },
     {
         timestamps: true
@@ -71,5 +84,6 @@ const userSchema = new mongoose.Schema({
 
 userSchema.plugin(mongoose_auto_populate);
 userSchema.plugin(require('mongoose-paginate-v2'));
+
 let Users = mongoose.model("Users", userSchema)
 module.exports = Users 

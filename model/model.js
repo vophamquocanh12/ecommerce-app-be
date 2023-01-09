@@ -9,5 +9,7 @@ const Sizes = require('./Size')
 const BillDetails = require('./BillDetails')
 const Bills = require('./Bills')
 const Users = require('./Users')
+const Actions = require('./Actions')
+const Comments = require('./Comments')
 
-module.exports = { Categories, Trademarks, Products, ProductDetails, Sizes, BillDetails, Bills, Users }
+module.exports = { Categories, Trademarks, Products, ProductDetails, Sizes, BillDetails, Bills, Users, Actions, Comments }

@@ -22,6 +22,18 @@ const productDetailsSchema = new mongoose.Schema({
         // 0: hết hàng
         // 1: còn hàng
     },
+    imageMain: {
+        type: String,
+        required: true
+    },
+    imageSub: [{
+        type: String,
+        default: ''
+    }],
+    quantitiesOfNorm: {
+        type: Number,
+        default: 0
+    },
     product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Products',
@@ -32,17 +44,21 @@ const productDetailsSchema = new mongoose.Schema({
         ref: 'Sizes',
         autopopulate: true
     },
-    quantitiesOfNorm: {
-        type: Number,
-        default: 0
-    },
     billDetails: {
         type: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'BillDetails',
         }],
         autopopulate: true
-    }
+    },
+    comments: {
+        type: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Comments',
+        }],
+        autopopulate: true
+    },
+
 
 },
     { timestamps: true }
@@ -50,5 +66,6 @@ const productDetailsSchema = new mongoose.Schema({
 
 productDetailsSchema.plugin(mongoose_auto_populate);
 productDetailsSchema.plugin(require('mongoose-paginate-v2'));
+
 let ProductDetails = mongoose.model("ProductDetails", productDetailsSchema)
 module.exports = ProductDetails 
