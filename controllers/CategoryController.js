@@ -23,13 +23,11 @@ const categoryController = {
                 const categories = await Categories.find({}).sort({
                     createdAt: -1
                 })
-                res.status(200).json({
-                    data: categories
-                })
+                res.status(200).json(categories)
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error
+                errorMessage: errorMessage
             })
         }
     },
@@ -42,12 +40,12 @@ const categoryController = {
                 res.status(200).json(category)
             } else {
                 res.status(404).json({
-                    errorMessage: 'Category not found with id ${req.params.id}'
+                    errorMessage: 'Category not found!'
                 })
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error
+                errorMessage: errorMessage
             })
         }
     },
@@ -57,11 +55,9 @@ const categoryController = {
         try {
             const name = req.query.name
             const check = RegExp(name, 'i')
-            const categories = await Categories.find({name: check}).populate('products').exec()
+            const categories = await Categories.find({ name: check }).populate('products').exec()
             if (categories) {
-                res.status(200).json({
-                    data: categories
-                })
+                res.status(200).json(categories)
             } else {
                 res.status(404).json({
                     errorMessage: 'Category name not found!'
@@ -69,7 +65,7 @@ const categoryController = {
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error
+                errorMessage: errorMessage
             })
         }
     }
@@ -78,7 +74,9 @@ const categoryController = {
     addCategory: async (req, res) => {
         try {
             const category = await Categories.create(req.body)
-            res.status(200).json(category)
+            res.status(200).json({ 
+                message: 'Category add successful!'
+            })
         } catch (error) {
             res.status(500).json({
                 errorMessage: 'Add category failed!'
@@ -95,6 +93,10 @@ const categoryController = {
                 res.status(200).json({
                     message: 'Update category successful!'
                 })
+            } else {
+                res.status(404).json({
+                    errorMessage: 'Category not found!',
+                });
             }
         } catch (error) {
             res.status(500).json({
@@ -117,7 +119,7 @@ const categoryController = {
                     res.status(200).json({
                         message: 'Deleted the category successfully!'
                     })
-                } x
+                }
             }
         } catch (error) {
             res.status(500).json({

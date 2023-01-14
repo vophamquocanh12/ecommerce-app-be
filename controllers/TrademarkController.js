@@ -23,13 +23,11 @@ const trademarkController = {
                 const trademarks = await Trademarks.find({}).sort({
                     createdAt: -1
                 })
-                res.status(200).json({
-                    date: trademarks
-                })
+                res.status(200).json(trademarks)
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error
+                errorMessage: errorMessage
             })
         }
     },
@@ -42,12 +40,12 @@ const trademarkController = {
                 res.status(200).json(trademark)
             } else {
                 res.status(404).json({
-                    errorMessage: 'Trademark not found with id ${req.params.id}'
+                    errorMessage: 'Trademark not found!'
                 })
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error
+                errorMessage: errorMessage
             })
         }
     },
@@ -59,9 +57,7 @@ const trademarkController = {
             const check = RegExp(name, 'i')
             const trademarks = await Trademarks.find({ name: check }).populate('products').exec()
             if (trademarks) {
-                res.status(200).json({
-                    data: trademarks
-                })
+                res.status(200).json(trademarks)
             } else {
                 res.status(404).json({
                     errorMessage: 'Trademark name not found!'
@@ -78,7 +74,9 @@ const trademarkController = {
     addTrademark: async (req, res) => {
         try {
             const trademark = await Trademarks.create(req.body)
-            res.status(200).json(trademark)
+            res.status(200).json({
+                message: 'Trademark add successful!'
+            })
         } catch (error) {
             res.status(500).json({
                 errorMessage: 'Add trademark failed!'
@@ -93,9 +91,12 @@ const trademarkController = {
             await trademark.updateOne({ $set: req.body })
             if (trademark) {
                 res.status(200).json({
-                    data: trademark,
                     message: 'Update trademark successful!'
                 })
+            }else{
+                res.status(404).json({
+                    errorMessage: 'Trademark not found!',
+                });
             }
         } catch (error) {
             res.status(500).json({
