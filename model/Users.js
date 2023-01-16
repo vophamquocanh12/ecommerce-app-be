@@ -6,8 +6,7 @@ mongoose.plugin(slug)
 
 const userSchema = new mongoose.Schema({
     username: {
-        type: String,
-        required: true
+        type: String
     },
     password: {
         type: String,
@@ -16,7 +15,6 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: true,
         unique: true,
     },
     email: {
@@ -29,16 +27,12 @@ const userSchema = new mongoose.Schema({
     },
     avatar: {
         type: String,
-        default: ""
-    },
-    slug: {
-        type: String,
-        slug: 'username',
-        unique: true
+        default: ''
     },
     numberBankAccount: {
         type: String,
         default: '',
+        unique: true
     },
     isAdmin: {
         type: Number,
