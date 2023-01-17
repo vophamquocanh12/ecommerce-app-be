@@ -1,7 +1,6 @@
-const routes = require('express').Router();
+const router = require('express').Router();
 
-const billDetailRoutes = require('../controllers/BillDetailController')
+const billDetailController = require('../controllers/BillDetailController')
 
-routes.get('/', billDetailRoutes.getAllBillDetails)
 
-module.exports = routes
+module.exports = router

@@ -1,6 +1,6 @@
-const routes = require('express').Router();
+const router = require('express').Router();
 
-const productRoutes = require('../controllers/ProductDetailController')
+const productController = require('../controllers/ProductDetailController')
 
 
-module.exports = routes
+module.exports = router

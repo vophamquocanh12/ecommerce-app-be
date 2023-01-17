@@ -2,6 +2,7 @@ const { Users } = require('../model/model')
 const bcrpyt = require('bcrypt')
 
 const userController = {
+
     login: async (req, res) => {
         try {
             const { email, password } = req.body
@@ -49,11 +50,11 @@ const userController = {
                 })
             }else if (existEmail) {
                 res.status(409).json({
-                    errorMessage: 'Email already taken!',
+                    message: 'Email already taken!',
                 })
             } else if (password !== confirmPassword) {
                 res.status(401).json({
-                    errorMessage: 'Confirm password do not match!',
+                    message: 'Confirm password do not match!',
                 })
             } else {
                 const salt = 10
@@ -72,6 +73,18 @@ const userController = {
             })
         }
     },
+
+    findAll : async (req, res) => {
+
+    },
+
+    findCustomers: async (req, res) => {
+
+    },
+
+    findProviders: async (req, res) => {
+
+    }
 }
 
 module.exports = userController

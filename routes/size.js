@@ -1,7 +1,7 @@
-const routes = require('express').Router();
+const router = require('express').Router();
 
-const categoryRoutes = require('../controllers/SizeController')
+const categoryController = require('../controllers/SizeController')
 
 
 
-module.exports = routes
+module.exports = router

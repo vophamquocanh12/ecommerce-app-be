@@ -1,7 +1,10 @@
-const { ProductDetails, Products, BillDetails } = require('../model/model')
+const {
+    ProductDetails,
+    Products,
+    BillDetails,
+    Sizes,
+} = require('../model/model')
 
-const productDetailController = {
-
-}
+const productDetailController = {}
 
 module.exports = productDetailController

@@ -1,13 +1,14 @@
-const routes = require('express').Router();
+const router = require('express').Router()
 
-const categoryRoutes = require('../controllers/CategoryController')
+const categoryController = require('../controllers/CategoryController')
 
-routes.get('/', categoryRoutes.findAll)
-routes.get('/:id', categoryRoutes.findId)
-routes.get('/question/find', categoryRoutes.searchByName)
-routes.post('/', categoryRoutes.addCategory)
-routes.put('/:id', categoryRoutes.updateCategory)
-routes.delete('/:id', categoryRoutes.deleteCategory)
+router.get('/', categoryController.findAll)
+router.get('/:id', categoryController.findById)
 
+router.get('/question/find', categoryController.searchByName)
 
-module.exports = routes
+router.post('/', categoryController.addCategory)
+router.put('/:id', categoryController.updateCategory)
+router.delete('/:id', categoryController.deleteCategory)
+
+module.exports = router

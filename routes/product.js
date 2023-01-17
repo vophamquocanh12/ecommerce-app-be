@@ -1,12 +1,14 @@
 const routes = require('express').Router();
 
-const productRoutes = require('../controllers/ProductController')
+const productController = require('../controllers/ProductController')
 
-routes.get('/', productRoutes.findAll)
-routes.get('/:id', productRoutes.findById)
-routes.get('/question/find', productRoutes.searchByName)
-routes.post('/', productRoutes.addProduct)
-routes.put('/:id', productRoutes.updateProduct)
-routes.delete('/:id', productRoutes.deleteProduct)
+routes.get('/', productController.findAll)
+routes.get('/:id', productController.findById)
+
+routes.get('/question/find', productController.searchByName)
+
+routes.post('/', productController.addProduct)
+routes.put('/:id', productController.updateProduct)
+routes.delete('/:id', productController.deleteProduct)
 
 module.exports = routes

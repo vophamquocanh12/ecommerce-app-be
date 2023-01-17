@@ -1,23 +1,35 @@
-const { Categories, Trademarks, Products, BillDetails, Bills, Actions, Comments, ProductDetails, Sizes } = require('../model/model')
+const {
+    Categories,
+    Trademarks,
+    Products,
+    BillDetails,
+    Bills,
+    Actions,
+    Comments,
+    ProductDetails,
+    Sizes,
+} = require('../model/model')
 
-const isNumber = require("is-number")
+const isNumber = require('is-number')
 
 const productController = {
-
     // get all products
     findAll: async (req, res) => {
         try {
             if (req.query.page || req.query.limit) {
-                const products = await Products.paginate({}, {
-                    page: req.query.page || 1,
-                    limit: req.query.limit || 10,
-                    sort: {
-                        createdAt: -1
-                    }
-                })
+                const products = await Products.paginate(
+                    {},
+                    {
+                        page: req.query.page || 1,
+                        limit: req.query.limit || 10,
+                        sort: {
+                            createdAt: -1,
+                        },
+                    },
+                )
                 let data = []
                 const { docs, ...others } = products
-                docs.forEach(product => {
+                docs.forEach((product) => {
                     const productDetails = product.productDetails
                     let rating = 0
                     let fiveStar = 0
@@ -38,13 +50,18 @@ const productController = {
                         }
                         const comments = productDetail.comments
                         for (let index in comments) {
-                            if (comments[index].star > 0)
-                                totalComments += 1
-                            comments[index].star === 5 ? fiveStar += 1 :
-                                comments[index].star === 4 ? fourStar += 1 :
-                                    comments[index].star === 3 ? threeStar += 1 :
-                                        comments[index].star === 2 ? twoStar += 1 :
-                                            comments[index].star === 1 ? oneStar += 1 : null
+                            if (comments[index].star > 0) totalComments += 1
+                            comments[index].star === 5
+                                ? (fiveStar += 1)
+                                : comments[index].star === 4
+                                ? (fourStar += 1)
+                                : comments[index].star === 3
+                                ? (threeStar += 1)
+                                : comments[index].star === 2
+                                ? (twoStar += 1)
+                                : comments[index].star === 1
+                                ? (oneStar += 1)
+                                : null
                             rating += comments[index].star
                         }
                     }
@@ -61,11 +78,11 @@ const productController = {
                     productObject.sold = sold
                     data.push(productObject)
                 })
-                
+
                 res.status(200).json(data)
             } else {
                 const products = await Products.find({}).sort({
-                    createdAt: -1
+                    createdAt: -1,
                 })
                 let data = []
                 for (const product of products) {
@@ -89,13 +106,18 @@ const productController = {
                         }
                         const comments = productDetail.comments
                         for (let index in comments) {
-                            if (comments[index].star > 0)
-                                totalComments += 1
-                            comments[index].star === 5 ? fiveStar += 1 :
-                                comments[index].star === 4 ? fourStar += 1 :
-                                    comments[index].star === 3 ? threeStar += 1 :
-                                        comments[index].star === 2 ? twoStar += 1 :
-                                            comments[index].star === 1 ? oneStar += 1 : null
+                            if (comments[index].star > 0) totalComments += 1
+                            comments[index].star === 5
+                                ? (fiveStar += 1)
+                                : comments[index].star === 4
+                                ? (fourStar += 1)
+                                : comments[index].star === 3
+                                ? (threeStar += 1)
+                                : comments[index].star === 2
+                                ? (twoStar += 1)
+                                : comments[index].star === 1
+                                ? (oneStar += 1)
+                                : null
                             rating += comments[index].star
                         }
                     }
@@ -115,7 +137,7 @@ const productController = {
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error
+                errorMessage: error,
             })
         }
     },
@@ -146,16 +168,24 @@ const productController = {
                     }
                     const comments = productDetail.comments
                     for (const comment of comments) {
-                        const commentItem = await Comments.findById(comment._id).populate('user')
+                        const commentItem = await Comments.findById(
+                            comment._id,
+                        ).populate('user')
                         if (commentItem.star > 0) {
                             totalCommentLength += 1
                             totalComments.push(commentItem)
                         }
-                        comment.star === 5 ? fiveStar += 1 :
-                            comment.star === 4 ? fourStar += 1 :
-                                comment.star === 3 ? threeStar += 1 :
-                                    comment.star === 2 ? twoStar += 1 :
-                                        comment.star === 1 ? oneStar += 1 : null
+                        comment.star === 5
+                            ? (fiveStar += 1)
+                            : comment.star === 4
+                            ? (fourStar += 1)
+                            : comment.star === 3
+                            ? (threeStar += 1)
+                            : comment.star === 2
+                            ? (twoStar += 1)
+                            : comment.star === 1
+                            ? (oneStar += 1)
+                            : null
                         rating += comment.star
                     }
                 }
@@ -174,12 +204,12 @@ const productController = {
                 res.status(200).json(data)
             } else {
                 res.status(404).json({
-                    errorMessage: "Product not found!",
+                    message: 'Product not found!',
                 })
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error
+                errorMessage: error,
             })
         }
     },
@@ -189,17 +219,20 @@ const productController = {
         try {
             const name = req.query.name
             const check = RegExp(name, 'i')
-            const products = await Products.find({ name: check }).populate('category').populate('trademark').exec()
+            const products = await Products.find({ name: check })
+                .populate('category')
+                .populate('trademark')
+                .exec()
             if (products) {
                 res.status(200).json(products)
             } else {
                 res.status(404).json({
-                    errorMessage: 'Product name not found!'
+                    message: 'Product name not found!',
                 })
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: errorMessage
+                errorMessage: error,
             })
         }
     },
@@ -211,137 +244,149 @@ const productController = {
             const trademark = await Trademarks.findById(req.body.trademark)
 
             const priceProduct = req.body.price
-            if (priceProduct && isNumber(priceProduct) && priceProduct > 0 && category && trademark) {
+            if (
+                priceProduct &&
+                isNumber(priceProduct) &&
+                priceProduct > 0 &&
+                category &&
+                trademark
+            ) {
                 const product = await Products.create(req.body)
                 await category.updateOne({
                     $push: {
-                        products: product.get('_id')
-                    }
+                        products: product.get('_id'),
+                    },
                 })
                 await trademark.updateOne({
                     $push: {
-                        products: product.get('_id')
-                    }
+                        products: product.get('_id'),
+                    },
                 })
                 res.status(200).json({
-                    message: 'Product add successful!'
+                    message: 'Product add successful!',
                 })
             } else {
                 res.status(404).json({
-                    errorMessage: 'Category/Trademark not found or price is not a number/price is 0'
+                    message:
+                        'Category/Trademark not found or price is not a number/price is 0',
                 })
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: 'Product add failed!'
+                errorMessage: 'Product add failed!',
             })
         }
     },
 
-    // update product 
+    // update product
     updateProduct: async (req, res) => {
         try {
-            const product = await Products.findById(req.params.id);
+            const product = await Products.findById(req.params.id)
             if (product) {
                 if (req.body.category) {
                     const oldCategory = await Categories.findById(
-                        product.get('category')
-                    );
-                    const category = await Categories.findById(req.body.category);
+                        product.get('category'),
+                    )
+                    const category = await Categories.findById(
+                        req.body.category,
+                    )
                     if (category) {
                         await Products.findByIdAndUpdate(
                             req.params.id,
-                            req.body
-                        );
+                            req.body,
+                        )
                         await oldCategory.updateOne({
                             $pull: {
                                 products: product.get('_id'),
                             },
-                        });
+                        })
                         await category.updateOne({
                             $push: {
                                 products: product.get('_id'),
                             },
-                        });
+                        })
                         res.status(200).json({
-                            message: 'Update product successful!'
-                        });
+                            message: 'Update product successful!',
+                        })
                     } else {
                         res.status(404).json({
-                            errorMessage: 'Category not found!',
-                        });
+                            message: 'Category not found!',
+                        })
                     }
                 } else if (req.body.trademark) {
                     const oldTrademark = await Trademarks.findById(
-                        product.get('trademark')
-                    );
-                    const trademark = await Trademarks.findById(req.body.trademark);
+                        product.get('trademark'),
+                    )
+                    const trademark = await Trademarks.findById(
+                        req.body.trademark,
+                    )
                     if (trademark) {
                         await Products.findByIdAndUpdate(
                             req.params.id,
-                            req.body
-                        );
+                            req.body,
+                        )
                         await oldTrademark.updateOne({
                             $pull: {
                                 products: product.get('_id'),
                             },
-                        });
+                        })
                         await trademark.updateOne({
                             $push: {
                                 products: product.get('_id'),
                             },
-                        });
+                        })
                         res.status(200).json({
-                            message: 'Update product successful!'
-                        });
+                            message: 'Update product successful!',
+                        })
                     } else {
                         res.status(404).json({
-                            errorMessage: 'Trademark not found! ',
-                        });
+                            message: 'Trademark not found! ',
+                        })
                     }
                 } else {
-                    await Products.findByIdAndUpdate(
-                        req.params.id,
-                        req.body
-                    );
+                    await Products.findByIdAndUpdate(req.params.id, req.body)
                     res.status(200).json({
-                        message: 'Update product successful!'
-                    });
+                        message: 'Update product successful!',
+                    })
                 }
             } else {
                 res.status(404).json({
-                    errorMessage: 'Product not found!',
-                });
+                    message: 'Product not found!',
+                })
             }
         } catch (error) {
             res.status(500).json({
-                message: 'Product update failed!'
+                errorMessage: 'Product update failed!',
             })
         }
     },
 
-    // delete products 
+    // delete products
     deleteProduct: async (req, res) => {
         try {
             let checkDelete = 0
-            const product = await Products.findById(req.params.id);
+            const product = await Products.findById(req.params.id)
             if (product) {
-                const category = await Categories.findById(product.get('category'))
+                const category = await Categories.findById(
+                    product.get('category'),
+                )
                 await category.updateOne({
                     $pull: {
-                        products: product.get('_id')
-                    }
+                        products: product.get('_id'),
+                    },
                 })
 
-                const trademark = await Trademarks.findById(product.get('trademark'))
+                const trademark = await Trademarks.findById(
+                    product.get('trademark'),
+                )
                 await trademark.updateOne({
                     $pull: {
-                        products: product.get('_id')
-                    }
+                        products: product.get('_id'),
+                    },
                 })
 
                 const productDetails = await ProductDetails.find({
-                    product: product.get('_id')
+                    product: product.get('_id'),
                 })
 
                 for (let productDetail of productDetails) {
@@ -366,20 +411,20 @@ const productController = {
                 if (checkDelete === 0) {
                     await product.remove()
                     res.status(200).json({
-                        message: 'Deleted the product successfully!'
+                        message: 'Deleted the product successfully!',
                     })
                 } else {
                     res.status(400).json({
-                        errorMessage: 'You can not delete it!'
-                    });
+                        message: 'You can not delete it!',
+                    })
                 }
             }
         } catch (error) {
             res.status(500).json({
-                message: 'Product delete failed!'
+                errorMessage: 'Product delete failed!',
             })
         }
-    }
+    },
 }
 
 module.exports = productController

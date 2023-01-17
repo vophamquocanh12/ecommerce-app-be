@@ -1,8 +1,5 @@
 const { ProductDetails, Sizes } = require('../model/model')
 
-const sizeController = {
-
-    
-}
+const sizeController = {}
 
 module.exports = sizeController

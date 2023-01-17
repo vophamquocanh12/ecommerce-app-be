@@ -1,12 +1,14 @@
-const routes = require('express').Router();
+const router = require('express').Router();
 
-const trademarkRoutes = require('../controllers/TrademarkController')
+const trademarkController = require('../controllers/TrademarkController')
 
-routes.get('/', trademarkRoutes.findAll)
-routes.get('/:id', trademarkRoutes.findId)
-routes.get('/question/find', trademarkRoutes.searchByName)
-routes.post('/', trademarkRoutes.addTrademark)
-routes.put('/:id', trademarkRoutes.updateTrademark)
-routes.delete('/:id', trademarkRoutes.deleteTrademark)
+router.get('/', trademarkController.findAll)
+router.get('/:id', trademarkController.findById)
 
-module.exports = routes
+router.get('/question/find', trademarkController.searchByName)
+
+router.post('/', trademarkController.addTrademark)
+router.put('/:id', trademarkController.updateTrademark)
+router.delete('/:id', trademarkController.deleteTrademark)
+
+module.exports = router
