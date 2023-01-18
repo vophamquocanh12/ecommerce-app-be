@@ -2,10 +2,10 @@ const router = require('express').Router();
 
 const trademarkController = require('../controllers/TrademarkController')
 
-router.get('/', trademarkController.findAll)
-router.get('/:id', trademarkController.findById)
+router.get('/', trademarkController.getAll)
+router.get('/:id', trademarkController.getById)
 
-router.get('/question/find', trademarkController.searchByName)
+router.get('/question/search', trademarkController.searchByName)
 
 router.post('/', trademarkController.addTrademark)
 router.put('/:id', trademarkController.updateTrademark)

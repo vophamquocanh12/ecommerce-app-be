@@ -14,7 +14,7 @@ const isNumber = require('is-number')
 
 const productController = {
     // get all products
-    findAll: async (req, res) => {
+    getAll: async (req, res) => {
         try {
             if (req.query.page || req.query.limit) {
                 const products = await Products.paginate(
@@ -143,7 +143,7 @@ const productController = {
     },
 
     // get a product
-    findById: async (req, res) => {
+    getById: async (req, res) => {
         try {
             const product = await Products.findById(req.params.id)
             let totalComments = []

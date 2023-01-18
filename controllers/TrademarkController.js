@@ -2,7 +2,7 @@ const { Trademarks } = require('../model/model')
 
 const trademarkController = {
     // get all trademarks
-    findAll: async (req, res) => {
+    getAll: async (req, res) => {
         try {
             if (req.query.page || req.query.limit) {
                 const trademarks = await Trademarks.paginate(
@@ -35,7 +35,7 @@ const trademarkController = {
     },
 
     // get a trademark
-    findById: async (req, res) => {
+    getById: async (req, res) => {
         try {
             const trademark = await Trademarks.findById(req.params.id).populate(
                 'products',
