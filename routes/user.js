@@ -4,6 +4,7 @@ const userController = require('../controllers/UserController')
 
 router.get('/', userController.getAll)
 router.get('/:id', userController.getById)
+router.get('/find/admins', userController.getAllAdmin)
 router.get('/find/customers', userController.getAllCustomers)
 router.get('/find/providers', userController.getAllProviders)
 

@@ -81,185 +81,230 @@ const userController = {
 
     updateUser: async (req, res) => {
         try {
-            const password = req.body.password
-            if(password){
-                const hased = bcrpyt.hashSync(password, 10)
-                password = hased
+            if (req.body.password) {
+                const hased = bcrpyt.hashSync(req.body.password, 10)
+                req.body.password = hased
             }
             const user = await Users.findById(req.params.id)
-            if(!user){
+            if (!user) {
                 res.status(404).json({
-                    message: 'Not found!'
+                    message: 'Not found!',
                 })
-            }else{
+            } else {
                 await Users.findByIdAndUpdate(req.params.id, req.body, {
-                    new: true
+                    new: true,
                 })
                 res.status(200).json({
-                    message: 'User updated successful!'
+                    message: 'User updated successful!',
                 })
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: 'Update user failed!'
+                errorMessage: 'Update user failed!',
             })
         }
     },
 
     deleteUser: async (req, res) => {
         try {
-            const user = await Users.findById(req.param.id)
-            if(!user){
+            const user = await Users.findById(req.params.id)
+            if (!user) {
                 res.status(404).json({
-                    message: 'Not found!'
+                    message: 'Not found!',
                 })
-            }else{
-                if(user.get('comments').length > 0 || user.get('bills').length > 0){
+            } else {
+                if (
+                    user.get('comments').length > 0 ||
+                    user.get('bills').length > 0
+                ) {
                     res.status(400).json({
-                        message: 'User has comments or bills'
+                        message: 'User has comments or bills',
                     })
-                }else{
-                    await Users.findByIdAndDelete(req.params.is)
+                } else {
+                    await Users.findByIdAndDelete(req.params.id)
                     res.status(200).json({
-                        message: 'Deleted the user successful!'
+                        message: 'Deleted the user successful!',
                     })
                 }
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: 'Delete user failed!'
+                errorMessage: 'Delete user failed!',
             })
         }
     },
-    
+
     getById: async (req, res) => {
         try {
-            const user = await Users.findById(req.params.id) 
-            if(user){
+            const user = await Users.findById(req.params.id)
+            if (user) {
                 res.status(200).json(user)
-            } else{
+            } else {
                 res.status(404).json({
-                    message: 'User not found!'
+                    message: 'User not found!',
                 })
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error
+                errorMessage: error,
             })
         }
     },
 
     getAll: async (req, res) => {
         try {
-            if(req.query.page || req.query.limit){
-                const users = await Users.paginate({},{
-                    page: req.query.page || 1,
-                    limit: req.limit || 10,
-                    sort: {
-                        createdAt: -1
-                    }
-                })
+            if (req.query.page || req.query.limit) {
+                const users = await Users.paginate(
+                    {},
+                    {
+                        page: req.query.page || 1,
+                        limit: req.limit || 10,
+                        sort: {
+                            createdAt: -1,
+                        },
+                    },
+                )
 
-                const {docs, ...others} = users
+                const { docs, ...others } = users
                 res.status(200).json({
                     data: docs,
-                    ...others
+                    ...others,
                 })
-            }else{
+            } else {
                 const users = await Users.find().sort({
-                    createdAt: -1
+                    createdAt: -1,
                 })
                 res.status(200).json({
                     data: users
                 })
             }
         } catch (error) {
-           res.status(500).json({
-            errorMessage: error
-           }) 
+            res.status(500).json({
+                errorMessage: error,
+            })
+        }
+    },
+
+    getAllAdmin: async (req, res) => {
+        try {
+            if (req.query.page || req.query.limit) {
+                const users = await Users.paginate(
+                    { isAdmin: 1 },
+                    {
+                        page: req.query.page || 1,
+                        limit: req.limit || 10,
+                        sort: {
+                            createdAt: -1,
+                        },
+                    },
+                )
+
+                const { docs, ...others } = users
+                res.status(200).json({
+                    data: docs,
+                    ...others,
+                })
+            } else {
+                const users = await Users.find({ isAdmin: 1 }).sort({
+                    createdAt: -1,
+                })
+                res.status(200).json({
+                    data: users,
+                })
+            }
+        } catch (error) {
+            res.status(500).json({
+                errorMessage: error,
+            })
         }
     },
 
     getAllCustomers: async (req, res) => {
         try {
-            if(req.query.page || req.query.limit){
-                const users = await Users.paginate({isCustomer: 1},{
-                    page: req.query.page || 1,
-                    limit: req.limit || 10,
-                    sort: {
-                        createdAt: -1
-                    }
-                })
+            if (req.query.page || req.query.limit) {
+                const users = await Users.paginate(
+                    { isCustomer: 1 },
+                    {
+                        page: req.query.page || 1,
+                        limit: req.limit || 10,
+                        sort: {
+                            createdAt: -1,
+                        },
+                    },
+                )
 
-                const {docs, ...others} = users
+                const { docs, ...others } = users
                 res.status(200).json({
                     data: docs,
-                    ...others
+                    ...others,
                 })
-            }else{
-                const users = await Users.find({isCustomer: 1}).sort({
-                    createdAt: -1
+            } else {
+                const users = await Users.find({ isCustomer: 1 }).sort({
+                    createdAt: -1,
                 })
                 res.status(200).json({
-                    data: users
+                    data: users,
                 })
-            } 
+            }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error
-               })  
+                errorMessage: error,
+            })
         }
     },
 
     getAllProviders: async (req, res) => {
         try {
-            if(req.query.page || req.query.limit){
-                const users = await Users.paginate({isProvider: 1},{
-                    page: req.query.page || 1,
-                    limit: req.limit || 10,
-                    sort: {
-                        createdAt: -1
-                    }
-                })
+            if (req.query.page || req.query.limit) {
+                const users = await Users.paginate(
+                    { isProvider: 1 },
+                    {
+                        page: req.query.page || 1,
+                        limit: req.limit || 10,
+                        sort: {
+                            createdAt: -1,
+                        },
+                    },
+                )
 
-                const {docs, ...others} = users
+                const { docs, ...others } = users
                 res.status(200).json({
                     data: docs,
-                    ...others
+                    ...others,
                 })
-            }else{
-                const users = await Users.find({isProvider: 1}).sort({
-                    createdAt: -1
+            } else {
+                const users = await Users.find({ isProvider: 1 }).sort({
+                    createdAt: -1,
                 })
                 res.status(200).json({
-                    data: users
+                    data: users,
                 })
-            } 
+            }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error
-               })  
+                errorMessage: error,
+            })
         }
     },
 
     searchByNameCustomers: async (req, res) => {
-        
-
         try {
             const name = req.query.name
             const check = RegExp(name, 'i')
-            const customers = await Users.find({username: check, isCustomer: 1}).exec()
-            if(customers){
+            const customers = await Users.find({
+                username: check,
+                isCustomer: 1,
+            }).exec()
+            if (customers) {
                 res.status(200).json(customers)
-            }else{
+            } else {
                 res.status(404).json({
-                    message: 'Customer name not found!'
+                    message: 'Customer name not found!',
                 })
             }
-
         } catch (error) {
             res.status(500).json({
-                errorMessage: error
+                errorMessage: error,
             })
         }
     },
@@ -268,20 +313,23 @@ const userController = {
         try {
             const name = req.query.name
             const check = RegExp(name, 'i')
-            const providers = await Users.find({username: check, isProvider: 1})
-            if(providers){
+            const providers = await Users.find({
+                username: check,
+                isProvider: 1,
+            })
+            if (providers) {
                 res.status(200).json(providers)
-            }else{
+            } else {
                 res.status(404).json({
-                    message: 'Provider name not found!'
+                    message: 'Provider name not found!',
                 })
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error
+                errorMessage: error,
             })
         }
-    }
+    },
 }
 
 module.exports = userController
