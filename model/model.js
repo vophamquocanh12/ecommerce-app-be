@@ -11,5 +11,6 @@ const Bills = require('./Bills')
 const Users = require('./Users')
 const Actions = require('./Actions')
 const Comments = require('./Comments')
+const Images = require('./Images')
 
-module.exports = { Categories, Trademarks, Products, ProductDetails, Sizes, BillDetails, Bills, Users, Actions, Comments }
+module.exports = { Categories, Trademarks, Products, ProductDetails, Sizes, BillDetails, Bills, Users, Actions, Comments, Images }
