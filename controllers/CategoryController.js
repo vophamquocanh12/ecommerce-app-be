@@ -29,7 +29,7 @@ const categoryController = {
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: errorMessage,
+                errorMessage: error.message,
             })
         }
     },
@@ -49,7 +49,7 @@ const categoryController = {
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error,
+                errorMessage: error.message
             })
         }
     },
@@ -71,7 +71,7 @@ const categoryController = {
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error,
+                errorMessage: error.message,
             })
         }
     },

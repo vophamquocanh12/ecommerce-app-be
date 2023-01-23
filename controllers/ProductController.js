@@ -137,7 +137,7 @@ const productController = {
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error,
+                errorMessage: error.message,
             })
         }
     },
@@ -209,7 +209,7 @@ const productController = {
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error,
+                errorMessage: error.message,
             })
         }
     },
@@ -232,7 +232,7 @@ const productController = {
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error,
+                errorMessage: error.message
             })
         }
     },

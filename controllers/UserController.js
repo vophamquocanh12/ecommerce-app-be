@@ -146,7 +146,7 @@ const userController = {
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error,
+                errorMessage: error.message
             })
         }
     },
@@ -180,7 +180,7 @@ const userController = {
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error,
+                errorMessage: error.message
             })
         }
     },
@@ -214,7 +214,7 @@ const userController = {
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error,
+                errorMessage: error.message
             })
         }
     },
@@ -248,7 +248,7 @@ const userController = {
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error,
+                errorMessage: error.message
             })
         }
     },
@@ -282,7 +282,7 @@ const userController = {
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error,
+                errorMessage: error.message
             })
         }
     },
@@ -304,7 +304,7 @@ const userController = {
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error,
+                errorMessage: error.message
             })
         }
     },
@@ -326,7 +326,7 @@ const userController = {
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error,
+                errorMessage: error.message
             })
         }
     },

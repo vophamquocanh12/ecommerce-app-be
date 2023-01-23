@@ -8,7 +8,7 @@ const {
 
 const productDetailController = {
 
-    create: async (req, res) => {
+    addProductDetail: async (req, res) => {
         try {
             let i = 0
             let checkExist = 0
@@ -101,12 +101,12 @@ const productDetailController = {
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error
+                errorMessage: error.message
             })
         }
     },
 
-    update: async (req, res) => {
+    updateProductDetail: async (req, res) => {
         try {
             let check = 0
             const product = await Products.findById(req.params.id)
@@ -235,12 +235,12 @@ const productDetailController = {
             }
         } catch (error) {
             res.status(500).json({
-                errorMessage: error
+                errorMessage: error.message
             })
         }
     },
 
-    delete: async (req, res) => {
+    deleteProductDetail: async (req, res) => {
         try {
             const productDetail = await ProductDetails.findById(req.params.id)
             if (productDetail) {
@@ -268,7 +268,7 @@ const productDetailController = {
                 })
         } catch (error) {
             res.status(500).json({
-                errorMessage: error
+                errorMessage: error.message
             })
         }
     },
