@@ -23,13 +23,13 @@ const userRouter = require('./routes/user')
 mongoose.set('strictQuery', false);
 // connect database
 mongoose.connect(process.env.MONGODB_URL, () => {
-    console.log("===> Connected to MongoDB <===");
+    console.log('===> Connected to MongoDB <===');
 });
 
 
-app.use(bodyParser.json({limit: "50mb"}))
+app.use(bodyParser.json({limit: '50mb'}))
 app.use(cors())
-app.use(morgan("common"))
+app.use(morgan('common'))
 // morgan 200 is success
 
 
@@ -43,5 +43,5 @@ app.use('/api/bills', billRouter)
 app.use('/api/users', userRouter)
 
 app.listen(5000, () => {
-    console.log("Server is running... ");
+    console.log('Server is running... ');
 } )

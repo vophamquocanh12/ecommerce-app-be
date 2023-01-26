@@ -12,7 +12,7 @@ const ImageSchema = new mongoose.Schema({
     productDetail: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'ProductDetails',
-
+        autopopulate: true,
     }
 },
     {

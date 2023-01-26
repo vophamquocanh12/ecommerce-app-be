@@ -2,7 +2,7 @@ const { Categories } = require('../model/model')
 
 const categoryController = {
     // get all categories
-    findAll: async (req, res) => {
+    getAll: async (req, res) => {
         try {
             if (req.query.page || req.query.limit) {
                 const categories = await Categories.paginate(
@@ -35,7 +35,7 @@ const categoryController = {
     },
 
     // get a category
-    findById: async (req, res) => {
+    getById: async (req, res) => {
         try {
             const category = await Categories.findById(req.params.id).populate(
                 'products',
