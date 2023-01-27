@@ -7,6 +7,27 @@ const {
 } = require('../model/model')
 
 const productDetailController = {
+
+    getAll: async (req, res) => {
+        try {
+            
+        } catch (error) {
+            res.status(500).json({
+                errorMessage: error.message
+            })
+        }
+    },
+
+    getById: async (req, res) => {
+        try {
+            
+        } catch (error) {
+            res.status(500).json({
+                errorMessage: error.message
+            })
+        }
+    },
+
     addProductDetail: async (req, res) => {
         try {
             const { product, sizeTemp, images } = req.body
@@ -295,7 +316,7 @@ const productDetailController = {
 
                 await productDetail.remove()
                 res.status(200).json({
-                    message: 'Delete success!',
+                    message: 'Deleted product detail successfully!',
                 })
             } else
                 res.status(404).json({
